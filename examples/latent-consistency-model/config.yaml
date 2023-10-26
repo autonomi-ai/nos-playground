@@ -1,0 +1,17 @@
+images:
+  lcm-gpu:
+    base: autonomi/nos:0.1.0rc2-gpu-py310-cu118
+    system:
+      - libgl1
+      - libgl1-mesa-glx
+      - libglib2.0-0
+    pip:
+      - accelerate>=0.23.0
+      - transformers>=4.34.1
+
+models:
+  latent-consistency-model:
+    model_cls: LatentConsistencyModel
+    model_path: models/lcm.py
+    default_method: __call__
+    runtime_env: lcm-gpu
