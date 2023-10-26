@@ -1,0 +1,24 @@
+images:
+  whisperx-gpu:
+    base: autonomi/nos:0.1.0rc2-gpu-py310-cu118
+    pip:
+      - "torchaudio>=2"
+      - "faster-whisper>=0.8"
+      - "pyannote.audio==3.0.1"
+      - "transformers"
+      - "ffmpeg-python>=0.2"
+      - "pandas"
+      - "setuptools>=65"
+      - "nltk"
+    workdir: /app/whisperx
+    env:
+      NOS_LOGGING_LEVEL: DEBUG
+    run:
+      - pip install --no-deps git+https://github.com/m-bain/whisperX.git
+
+models:
+  whisperx:
+    model_cls: WhisperX
+    model_path: models/whisperx.py
+    default_method: transcribe
+    runtime_env: whisperx-gpu
