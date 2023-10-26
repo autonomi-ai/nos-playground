@@ -79,3 +79,17 @@ lines-after-imports = 2
 [tool.ruff.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "default:Using or importing the ABCs:DeprecationWarning:unittest2.*",
+    "default:.*not marked using pytest.hook.*",
+    "ignore:.*not marked using pytest.hook.*::xdist.*",
+    "ignore::Warning",
+    "ignore::ImportWarning",
+    "ignore::DeprecationWarning",
+    "ignore::ResourceWarning",
+]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
