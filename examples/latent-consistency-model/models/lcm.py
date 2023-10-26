@@ -22,7 +22,6 @@ class LatentConsistencyModel:
     def __call__(
         self,
         prompts: Union[str, List[str]],
-        negative_prompts: Union[str, List[str]] = None,
         num_images: int = 1,
         num_inference_steps: int = 50,
         guidance_scale: float = 7.5,
@@ -35,7 +34,6 @@ class LatentConsistencyModel:
             torch.manual_seed(seed)
             result = self.pipe(
                 prompt=prompts,
-                negative_prompt=negative_prompts,
                 width=width,
                 height=height,
                 guidance_scale=guidance_scale,

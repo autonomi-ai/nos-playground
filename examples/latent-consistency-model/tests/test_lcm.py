@@ -6,7 +6,6 @@ def test_lcm():
 
     from PIL import Image
 
-    # Create a client
     client = Client("[::]:50051")
     assert client is not None
     assert client.WaitForServer()
