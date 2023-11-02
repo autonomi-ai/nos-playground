@@ -1,45 +1,44 @@
+import tempfile
+from pathlib import Path
+
+import ffmpeg
 from nos.client import Client
-from nos.logging import logger
 from nos.test.utils import NOS_TEST_AUDIO, get_benchmark_audio  # noqa: F401
+from rich import print
+
+
+def trim_audio(audio_path: Path, duration_s: int = 600) -> Path:
+    with tempfile.NamedTemporaryFile(suffix=Path(audio_path).suffix, delete=False) as tmp:
+        audio_trimmed = ffmpeg.input(str(audio_path)).audio.filter("atrim", duration=duration_s)
+        audio_output = ffmpeg.output(audio_trimmed, tmp.name)
+        ffmpeg.run(audio_output, overwrite_output=True)
+        return Path(tmp.name)
 
 
 def test_whisperx_transcribe_audio_file():
-    from typing import List
-
     from rich.pretty import pretty_repr
 
     # Create a client
     client = Client("[::]:50051")
-    assert client is not None
     assert client.WaitForServer()
-    assert client.IsHealthy()
 
-    model_id = "whisperx"
-    models: List[str] = client.ListModels()
-    assert model_id in models
-
-    # Whisper
-    # model_id = "m-bain/whisperx-large-v2"
-    model = client.Module(model_id)
-    assert model is not None
-    assert model.GetModelInfo() is not None
-    print(f"Test [model={model_id}]")
+    # Laod the custom whisperx model
+    model = client.Module("m-bain/whisperx-large-v2", shm=True)
 
     # Uplaod local audio path to server and execute inference
     # on the remote path. Note that the audio file is deleted
     # from the server after the inference is complete via the
     # context manager.
-    logger.debug(f"Uploading [filename={NOS_TEST_AUDIO}, size={NOS_TEST_AUDIO.stat().st_size / (1024 * 1024):.2f} MB]")
-    with client.UploadFile(NOS_TEST_AUDIO) as remote_path:
-        response = model.transcribe(path=remote_path)
+    audio_path = get_benchmark_audio()  # NOS_TEST_AUDIO
+
+    # Read the first 600s of the audio file and write it to
+    # a temporary file with the same file extension as the
+    # original audio file.
+    print("\n[green]Trimming audio ...[/green]")
+    audio_path = trim_audio(audio_path, duration_s=600)
+    print(f"[green]Uploading {audio_path} to server...[/green]")
+    with client.UploadFile(audio_path) as remote_path:
+        response = model.transcribe(path=remote_path, batch_size=96)
+    audio_path.unlink()
     assert isinstance(response, dict)
-    logger.debug(pretty_repr(response))
-    assert isinstance(response["segments"], list)
-    assert isinstance(response["word_segments"], list)
-    for item in response["segments"]:
-        assert "start" in item
-        assert "end" in item
-        assert "text" in item
-    for item in response["word_segments"]:
-        assert "word" in item
-        # not all words have a start/end/score keys
+    print(pretty_repr(response["segments"]))

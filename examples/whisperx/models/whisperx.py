@@ -1,10 +1,11 @@
-import gc
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List
 
+import numpy as np
+import pandas as pd
 import torch
-from nos.hub import TorchHubConfig
+from nos.hub import TorchHubConfig, hf_login
 
 
 @dataclass(frozen=True)
@@ -19,11 +20,6 @@ class WhisperXConfig(TorchHubConfig):
 
 
 class WhisperX:
-    """WhisperX model for audio transcription.
-
-    Based on https://github.com/m-bain/whisperX
-    """
-
     configs = {
         "m-bain/whisperx-large-v2": WhisperXConfig(
             repo="m-bain/whisperX",
@@ -45,33 +41,33 @@ class WhisperX:
         else:
             self.device_str = "cpu"
         self.device = torch.device(self.device_str)
-
-        # WhisperX model
         self.model = whisperx.load_model(self.cfg.model_name, self.device_str, compute_type=self.cfg.compute_type)
-        # Aligment models are loaded on transcribe call to align to a specific language
+        self._load_audio = whisperx.load_audio
         self._load_align_model = whisperx.load_align_model
         self._align = whisperx.align
-        # TODO (spillai): Add support for diarization
+        self._assign_word_speakers = whisperx.assign_word_speakers
+        self._diarize_model = whisperx.DiarizationPipeline(
+            model_name="pyannote/speaker-diarization@2.1", use_auth_token=hf_login(), device=self.device
+        )
 
     def transcribe(
         self,
         path: Path,
         batch_size: int = 24,
         align_output: bool = True,
+        diarize_output: bool = True,
         language_code: str = "en",
     ) -> List[Dict[str, Any]]:
         """Transcribe the audio file."""
+        audio: np.ndarray = self._load_audio(str(path))
         with torch.inference_mode():
-            # Transcribe the first chunks before
-            result: Dict[str, Any] = self.model.transcribe(str(path), batch_size=batch_size)
-
+            result: Dict[str, Any] = self.model.transcribe(audio, batch_size=batch_size)
+            # Align the output
             if align_output:
-                # Load alignment model and metadata
                 alignment_model, alignment_metadata = self._load_align_model(
                     language_code=language_code, device=self.device_str
                 )
-
-                result = self._align(
+                result: Dict[str, Any] = self._align(
                     result["segments"],
                     alignment_model,
                     alignment_metadata,
@@ -79,9 +75,10 @@ class WhisperX:
                     self.device_str,
                     return_char_alignments=False,
                 )
-                # Cleanup alignment model
-                del alignment_model
-                gc.collect()
-                torch.cuda.empty_cache()
-
+            # Diarize the output
+            if diarize_output:
+                assert align_output, "align_output must be True when diaryze_output is True"
+                diarize_segments: pd.DataFrame = self._diarize_model(audio)
+                result: Dict[str, Any] = self._assign_word_speakers(diarize_segments, result)
+                assert "segments" in result, "segments must be in result"
         return result

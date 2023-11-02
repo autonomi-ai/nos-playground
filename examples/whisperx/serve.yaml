@@ -14,10 +14,15 @@ images:
     env:
       NOS_LOGGING_LEVEL: DEBUG
     run:
+      - pip install --upgrade pip
       - pip install --no-deps git+https://github.com/m-bain/whisperX.git
+      # workaround for slow speaker diarization (https://github.com/m-bain/whisperX/issues/499)
+      - pip install pyannote.audio==3.0.1
+      - pip uninstall -y onnxruntime
+      - pip install --force-reinstall onnxruntime-gpu
 
 models:
-  whisperx:
+  m-bain/whisperx-large-v2:
     model_cls: WhisperX
     model_path: models/whisperx.py
     default_method: transcribe
