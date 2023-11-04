@@ -22,10 +22,10 @@ def test_whisperx_transcribe_audio_file():
     client = Client("[::]:50051")
     assert client.WaitForServer()
 
-    # Laod the custom whisperx model
+    # Load the custom whisperx model
     model = client.Module("m-bain/whisperx-large-v2", shm=True)
 
-    # Uplaod local audio path to server and execute inference
+    # Upload local audio path to server and execute inference
     # on the remote path. Note that the audio file is deleted
     # from the server after the inference is complete via the
     # context manager.
