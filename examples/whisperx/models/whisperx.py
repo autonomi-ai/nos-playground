@@ -24,7 +24,7 @@ class WhisperX:
         "m-bain/whisperx-large-v2": WhisperXConfig(
             repo="m-bain/whisperX",
             model_name="large-v2",
-            compute_type="float16",
+            compute_type="float32",
         ),
     }
 
@@ -46,6 +46,8 @@ class WhisperX:
         self._load_align_model = whisperx.load_align_model
         self._align = whisperx.align
         self._assign_word_speakers = whisperx.assign_word_speakers
+        # print the env var $HUGGINGFACE_HUB_TOKEN
+        print("HUGGINGFACE_HUB_TOKEN:", hf_login())
         self._diarize_model = whisperx.DiarizationPipeline(
             model_name="pyannote/speaker-diarization@2.1", use_auth_token=hf_login(), device=self.device
         )
