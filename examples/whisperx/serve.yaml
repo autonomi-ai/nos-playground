@@ -1,6 +1,6 @@
 images:
   whisperx-gpu:
-    base: autonomi/nos:0.1.0rc2-gpu-py310-cu118
+    base: autonomi/nos:0.1.0rc3-gpu-py310-cu118
     pip:
       - "torchaudio>=2"
       - "faster-whisper>=0.8"
