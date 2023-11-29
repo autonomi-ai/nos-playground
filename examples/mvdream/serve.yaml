@@ -1,0 +1,21 @@
+images:
+  mvdream-gpu:
+    base: autonomi/nos:0.1.0rc3-gpu
+    pip:
+      - transformers==4.27.1
+      - xformers>=0.0.22
+      - open-clip-torch==2.7.0
+      - omegaconf
+      - einops
+    env:
+      NOS_LOGGING_LEVEL: DEBUG
+    run:
+      - pip install --upgrade pip
+      - pip install --no-deps git+https://github.com/bytedance/MVDream.git
+
+models:
+  mv-dream:
+    model_cls: MVDreamModel
+    model_path: models/mvdream.py
+    default_method: __call__
+    runtime_env: mvdream-gpu
