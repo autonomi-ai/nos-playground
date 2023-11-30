@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Union
 
+from PIL import Image
 import numpy as np
 import torch
 
@@ -33,10 +34,10 @@ class MVDreamModel:
         negative_prompts: Union[str, List[str]] = None,       
         num_inference_steps: int = 50,
         guidance_scale: float = 7.5,
-        ddim_eta:float = 0.0,
+        ddim_eta: float = 0.0,
         image_size: int = 256,
         seed: int = -1,
-    ) -> List[Dict[str, Any]]:
+    ) -> List[Image.Image]:
         
         if isinstance(prompts, list):
             prompts = [prompts]
@@ -72,4 +73,6 @@ class MVDreamModel:
             x_sample = self.model.decode_first_stage(samples_ddim)
             x_sample = torch.clamp((x_sample + 1.0) / 2.0, min=0.0, max=1.0)
             x_sample = 255. * x_sample.permute(0,2,3,1).cpu().numpy()
-        return list(x_sample.astype(np.uint8))
+            x_sample = list(x_sample.astype(np.uint8))
+            images= [Image.fromarray(x_samp) for x_samp in x_sample]
+        return images
