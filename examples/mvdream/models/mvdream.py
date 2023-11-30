@@ -51,9 +51,11 @@ class MVDreamModel:
         with torch.no_grad(), torch.autocast(device_type=self.device_str, dtype=self.torch_dtype):
             torch.manual_seed(seed)
             
+            # Generate context for conditioning using embedder for given input prompts.
             c = self.model.get_learned_conditioning(prompts).to(self.device_str)
             uc = self.model.get_learned_conditioning(negative_prompts).to(self.device_str)
 
+            # Using the same context for all camera views.
             c_ = {"context": c.repeat(self.nviews, 1, 1)}
             uc_ = {"context": uc.repeat(self.nviews,1, 1)}
 
