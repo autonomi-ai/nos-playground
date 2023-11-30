@@ -71,7 +71,7 @@ class StableVideoDiffusionModel():
     ) -> Iterable[Image.Image]:
         
         if isinstance(image, np.ndarray):
-            image = Image(image)
+            image = Image.fromarray(image)
 
         if isinstance(image, str):
             if image.startswith("http://") or image.startswith("https://"):
