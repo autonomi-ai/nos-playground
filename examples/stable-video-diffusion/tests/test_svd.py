@@ -21,9 +21,7 @@ def test_svd():
     assert model.GetModelInfo() is not None
     print(f"Test [model={model_id}]")
 
-    from typing import Iterable
     response: Iterable[Image.Image] = model.image2video(image=TEST_IMAGE_LINK, _stream=True)
-
     frames = []
     for resp in response:
         frames.append(resp)
