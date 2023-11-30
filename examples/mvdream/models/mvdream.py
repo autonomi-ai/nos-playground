@@ -30,7 +30,7 @@ class MVDreamModel:
     def __call__(
         self,
         prompts: Union[str, List[str]],
-        negative_prompts: Union[str, List[str]] = [""],       
+        negative_prompts: Union[str, List[str]] = None,       
         num_inference_steps: int = 50,
         guidance_scale: float = 7.5,
         ddim_eta:float = 0.0,
@@ -38,12 +38,15 @@ class MVDreamModel:
         seed: int = -1,
     ) -> List[Dict[str, Any]]:
         
-        if type(prompts)!=list:
+        if isinstance(prompts, list):
             prompts = [prompts]
 
-        if type(negative_prompts)!=list:
+        if isinstance(negative_prompts, list):
             negative_prompts = [negative_prompts]
             
+        if negative_prompts is None:
+            negative_prompts = [""]
+
         with torch.no_grad(), torch.autocast(device_type=self.device_str, dtype=self.torch_dtype):
             torch.manual_seed(seed)
             
