@@ -39,10 +39,10 @@ class MVDreamModel:
         seed: int = -1,
     ) -> List[Image.Image]:
         
-        if isinstance(prompts, list):
+        if isinstance(prompts, str):
             prompts = [prompts]
 
-        if isinstance(negative_prompts, list):
+        if isinstance(negative_prompts, str):
             negative_prompts = [negative_prompts]
             
         if negative_prompts is None:
