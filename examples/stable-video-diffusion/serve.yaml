@@ -1,0 +1,14 @@
+images:
+  svd-gpu:
+    base: autonomi/nos:0.1.1-gpu
+    pip:
+      - diffusers==0.24.0
+      - transformers==4.35.2
+      - accelerate==0.23.0
+
+models:
+  stable-video-diffusion:
+    model_cls: StableVideoDiffusionModel
+    model_path: models/svd.py
+    default_method: image2video
+    runtime_env: svd-gpu
