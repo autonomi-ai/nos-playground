@@ -72,7 +72,4 @@ class StableVideoDiffusionModel():
         image = image.resize((self.cfg.width, self.cfg.height))
 
         generator = torch.manual_seed(seed)
-        frames = self.pipe(image, decode_chunk_size=self.cfg.decode_chunk_size, generator=generator).frames[0]
-
-        for frame in frames:
-            yield frame
+        yield from self.pipe(image, decode_chunk_size=self.cfg.decode_chunk_size, generator=generator).frames[0]
