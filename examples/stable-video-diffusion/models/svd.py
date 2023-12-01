@@ -1,8 +1,5 @@
-import os
-import requests
-
 from dataclasses import dataclass
-from typing import List, Union, Iterable
+from typing import Union, Iterable
 
 from PIL import Image
 import numpy as np
@@ -66,19 +63,12 @@ class StableVideoDiffusionModel():
 
     def image2video(
         self,
-        image: Union[np.ndarray, Image.Image, str],
+        image: Union[np.ndarray, Image.Image],
         seed: int = -1,
     ) -> Iterable[Image.Image]:
         
         if isinstance(image, np.ndarray):
             image = Image.fromarray(image)
-
-        if isinstance(image, str):
-            if image.startswith("http://") or image.startswith("https://"):
-                image = Image.open(requests.get(image, stream=True).raw)
-            elif os.path.isfile(image):
-                image = Image.open(image)
-
         image = image.resize((self.cfg.width, self.cfg.height))
 
         generator = torch.manual_seed(seed)
