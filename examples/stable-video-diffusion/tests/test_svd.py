@@ -1,3 +1,4 @@
+import requests
 from typing import List, Iterable
 
 from PIL import Image
@@ -21,10 +22,8 @@ def test_svd():
     assert model.GetModelInfo() is not None
     print(f"Test [model={model_id}]")
 
-    response: Iterable[Image.Image] = model.image2video(image=TEST_IMAGE_LINK, _stream=True)
-    frames = []
+    image: Image.Image = requests.get(TEST_IMAGE_LINK)
+    response: Iterable[Image.Image] = model.image2video(image=image, _stream=True)
     for resp in response:
-        frames.append(resp)
-        
         assert resp is not None
         assert isinstance(resp, Image.Image)
