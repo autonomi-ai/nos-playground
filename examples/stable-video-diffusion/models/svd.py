@@ -11,16 +11,22 @@ from nos.hub import HuggingFaceHubConfig
 class StableVideoDiffusionConfig(HuggingFaceHubConfig):
     
     model_cls: str = "StableVideoDiffusionPipeline"
+    """Name of the model class to use."""
 
     torch_dtype: str = "float16"
+    """Torch dtype string to use for inference."""
 
     width: int = 1024
+    """Image width to use for inference, optimally set to be the same as training."""
 
     height: int = 576
+    """Image height to use for inference, optimally set to be the same as training."""
 
     video_frames : int = 14
+    """Number of frames the model is capable to generate."""
 
     decode_chunk_size : int = 8
+    """Number of frames will be decoded at once."""
 
 class StableVideoDiffusionModel():
 
