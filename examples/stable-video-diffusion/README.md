@@ -11,6 +11,8 @@ nos serve up -c serve.yaml
 ## Inference
 Here is an example how to run the inference:
 ``` python
+import requests
+
 from PIL import Image
 from nos.client import Client
 
@@ -18,11 +20,9 @@ client = Client("[::]:50051")
 model = client.Module("stable-video-diffusion")
 
 image_link = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/svd/rocket.png?download=true"
-
-response: Iterable[Image.Image] = model.image2video(image=image_link, _stream=True)
-frames = []
-for resp in response:
-    frames.append(resp)
+image: Image.Image = requests.get(image_link)
+response: Iterable[Image.Image] = model.image2video(image=image, _stream=True)
+frames = list(response)
 
 frames[0].save(
     "example.gif",
