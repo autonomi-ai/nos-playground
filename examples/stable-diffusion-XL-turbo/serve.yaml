@@ -1,0 +1,16 @@
+images:
+  sd-xl-turbo-gpu:
+    base: autonomi/nos:0.1.1-gpu
+    pip:
+      - diffusers==0.24.0
+      - transformers==4.35.2
+      - accelerate==0.23.0
+    env:
+      NOS_LOGGING_LEVEL: DEBUG
+
+models:
+  sd-xl-turbo:
+    model_cls: StableDiffusionXLTurboModel
+    model_path: models/sdxl_turbo.py
+    default_method: text2image
+    runtime_env: sd-xl-turbo-gpu
