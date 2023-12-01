@@ -53,8 +53,6 @@ class StableVideoDiffusionModel():
         except KeyError:
             raise ValueError(f"Invalid model_name: {model_name}, available models: {StableVideoDiffusionConfig.configs.keys()}")
         
-        assert torch.cuda.is_available()
-
         self.torch_dtype = getattr(torch, self.cfg.torch_dtype)
         self.variant = "fp16" if self.torch_dtype == torch.float16 else None
 
