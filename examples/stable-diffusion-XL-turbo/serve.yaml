@@ -12,5 +12,5 @@ models:
   sd-xl-turbo:
     model_cls: StableDiffusionXLTurboModel
     model_path: models/sdxl_turbo.py
-    default_method: text2image
+    default_method: __call__
     runtime_env: sd-xl-turbo-gpu

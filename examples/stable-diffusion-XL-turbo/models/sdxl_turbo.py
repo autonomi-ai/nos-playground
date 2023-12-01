@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from diffusers import AutoPipelineForText2Image
 
-class StableDiffusionXLTurboModel():
+class StableDiffusionXLTurboModel:
 
     def __init__(self, model_name: str = "stabilityai/sdxl-turbo", dtype: str = "float16"):
 
@@ -17,7 +17,7 @@ class StableDiffusionXLTurboModel():
         self.pipe = AutoPipelineForText2Image.from_pretrained(model_name, torch_dtype=self.torch_dtype, variant="fp16")
         self.pipe.to("cuda")
 
-    def text2image(
+    def __call__(
         self,
         prompts: Union[str, List[str]],
         negative_prompts: Union[str, List[str]] = None,

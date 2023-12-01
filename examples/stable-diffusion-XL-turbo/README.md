@@ -18,7 +18,7 @@ from nos.client import Client
 client = Client("[::]:50051")
 model = client.Module("sd-xl-turbo")
 
-frames: List[Image.Image] = model.text2image(prompts=["astronaut on the moon, hdr, 4k"], num_inference_steps=1)
+frames: List[Image.Image] = model(prompts=["astronaut on the moon, hdr, 4k"], num_inference_steps=1)
 frames[0].save("example.png")
 ```
 The "example.png" should be looking like:

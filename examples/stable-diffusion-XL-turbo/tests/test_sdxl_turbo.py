@@ -19,5 +19,5 @@ def test_sdxl_turbo():
     assert model.GetModelInfo() is not None
     print(f"Test [model={model_id}]")
 
-    response: List[Image.Image] = model.text2image(prompts=["astronaut on the moon, hdr, 4k"], num_inference_steps=1)
+    response: List[Image.Image] = model(prompts=["astronaut on the moon, hdr, 4k"], num_inference_steps=1)
     assert isinstance(response, list)
