@@ -1,14 +1,14 @@
-from typing import List, Iterable
+from typing import List
 from PIL import Image
 from nos.client import Client
 
-def test_animate_diff():
+def test_music_gen():
     client = Client("[::]:50051")
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()
 
-    model_id = "animate-diff"
+    model_id = "music-gen"
     models: List[str] = client.ListModels()
     assert model_id in models
 
@@ -17,7 +17,7 @@ def test_animate_diff():
     assert model.GetModelInfo() is not None
     print(f"Test [model={model_id}]")
 
-    response: Iterable[Image.Image] = model(prompts=["astronaut on the moon, hdr, 4k"], _stream=True)
-    for resp in response:
-        assert resp is not None
-        assert isinstance(resp, Image.Image)
+    response = model(prompt="lo-fi music, chill beats to relax")
+    assert isinstance(response, dict)
+    assert response["audio"] is not None
+    assert response["sampling_rate"] is not None
