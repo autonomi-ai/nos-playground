@@ -1,0 +1,14 @@
+images:
+  music-gen-gpu:
+    base: autonomi/nos:0.1.1-gpu
+    pip:
+      - diffusers==0.24.0
+      - transformers==4.35.2
+      - accelerate==0.23.0
+
+models:
+  music-gen:
+    model_cls: MusicGen
+    model_path: models/model.py
+    default_method: __call__
+    runtime_env: music-gen-gpu
