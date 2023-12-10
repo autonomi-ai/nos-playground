@@ -2,7 +2,7 @@ from typing import List, Iterable
 from PIL import Image
 from nos.client import Client
 
-def test_svd():
+def test_animate_diff():
     client = Client("[::]:50051")
     assert client is not None
     assert client.WaitForServer()
