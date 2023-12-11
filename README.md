@@ -43,9 +43,17 @@ model_id: str = "m-bain/whisperx-large-v2"
 
 ### Text to image
 ```python
-model_id: str = "sd-xl-turbo"
+model_id: List[str] = ["sd-xl-turbo", 
+                        "playground-v2",
+                        "latent-consistency-model"]
 ```
 <img src="examples/stable-diffusion-XL-turbo/example.png" width="150">
+
+### Text to video
+```python
+model_id: str = "animate-diff"
+```
+<img src="examples/animate-diff/example.gif" width="150">
 
 ### Image to video
 ```python
@@ -58,6 +66,15 @@ model_id: str = "stable-video-diffusion"
 model_id: str = "mv-dream"
 ```
 <img src="examples/mvdream/example.png" width="600">
+
+### Text to Speech
+```python
+model_id: str = "bark"
+```
+### Text to Music
+```python
+model_id: str = "music-gen"
+```
 
 ## Reach US
 * 💬 Send us an email at [support@autonomi.ai](mailto:support@autonomi.ai) or join our [Discord](https://discord.gg/QAGgvTuvgg) for help.
