@@ -30,7 +30,7 @@ class MusicGen:
         try:
             self.cfg = MusicGen.configs[model_name]
         except KeyError:
-            raise ValueError(f"Invalid model_name: {model_name}, available models: {Llama2ChatConfig.configs.keys()}")
+            raise ValueError(f"Invalid model_name: {model_name}, available models: {MusicGen.configs.keys()}")
 
         if torch.cuda.is_available():
             self.device_str = "cuda"
