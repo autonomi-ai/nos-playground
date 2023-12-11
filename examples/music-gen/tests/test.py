@@ -1,5 +1,4 @@
 from typing import List
-from PIL import Image
 from nos.client import Client
 
 def test_music_gen():

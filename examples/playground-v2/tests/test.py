@@ -1,13 +1,14 @@
 from typing import List
+from PIL import Image
 from nos.client import Client
 
-def test_bark():
+def test_playground_v2():
     client = Client("[::]:50051")
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()
 
-    model_id = "bark"
+    model_id = "playground-v2"
     models: List[str] = client.ListModels()
     assert model_id in models
 
@@ -16,7 +17,5 @@ def test_bark():
     assert model.GetModelInfo() is not None
     print(f"Test [model={model_id}]")
 
-    response = model(prompt="Hi, this is an example from nos.")
-    assert isinstance(response, dict)
-    assert response["audio"] is not None
-    assert response["sampling_rate"] is not None
+    response: List[Image.Image] = model(prompts=["astronaut on the moon, hdr, 4k"])
+    assert isinstance(response, list)
