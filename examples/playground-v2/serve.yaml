@@ -1,0 +1,14 @@
+images:
+  playground-v2-gpu:
+    base: autonomi/nos:0.1.1-gpu
+    pip:
+      - diffusers==0.24.0
+      - transformers==4.35.2
+      - accelerate==0.23.0
+
+models:
+  playground-v2:
+    model_cls: PlayGroundV2
+    model_path: models/model.py
+    default_method: __call__
+    runtime_env: playground-v2-gpu
