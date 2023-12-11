@@ -1,0 +1,14 @@
+images:
+  bark-gpu:
+    base: autonomi/nos:0.1.1-gpu
+    pip:
+      - diffusers==0.24.0
+      - transformers==4.35.2
+      - accelerate==0.23.0
+
+models:
+  bark:
+    model_cls: Bark
+    model_path: models/model.py
+    default_method: __call__
+    runtime_env: bark-gpu
