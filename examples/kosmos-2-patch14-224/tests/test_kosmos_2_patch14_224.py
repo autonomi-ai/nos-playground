@@ -18,9 +18,9 @@ def test_kosmos_2_patch_224():
     
 
     model = client.Module(model_id)
-    #assert model is not None
-    #assert model.GetModelInfo() is not None
-    #print(f"Test [model={model_id}]")
+    assert model is not None
+    assert model.GetModelInfo() is not None
+    print(f"Test [model={model_id}]")
 
     prompt = "<grounding>An image of"
 
