@@ -67,6 +67,13 @@ model_id: str = "mv-dream"
 ```
 <img src="examples/mvdream/example.png" width="600">
 
+### Image to mesh model
+```python
+model_id: str = "dream-gaussian"
+```
+<img src="examples/dream-gaussian/csm_luigi_rgba.png" width="150">
+<img src="examples/dream-gaussian/example.gif" width="160">
+
 ### Text to Speech
 ```python
 model_id: str = "bark"
