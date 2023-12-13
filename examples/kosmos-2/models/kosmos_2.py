@@ -3,22 +3,15 @@ from transformers import AutoProcessor, AutoModelForVision2Seq
 from PIL import Image
 from typing import Dict, Any
 
-class Kosmos2Patch14224:
+class Kosmos2:
     def __init__(self, model_name: str = "microsoft/kosmos-2-patch14-224") -> None:
-        from nos.logging import logger
-
         self.device_str = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.device = torch.device(self.device_str)
         
         self.model = AutoModelForVision2Seq.from_pretrained(model_name).to(self.device)
         self.processor = AutoProcessor.from_pretrained(model_name)
 
-
-        self.logger = logger
-
     def image_to_text(self, prompt: str, image: Image.Image, cleanup_and_extract: bool = True) -> Dict[str, Any]:
-        from nos.logging import logger
-
         inputs = self.processor(text=prompt, images=image, return_tensors="pt").to(self.device)
 
         generated_ids = self.model.generate(
