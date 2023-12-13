@@ -1,5 +1,4 @@
 from nos.client import Client
-from typing import List
 
 from rich import print
 from PIL import Image
@@ -7,14 +6,14 @@ import requests
 
 TEST_PROMPTS = ["<grounding>An image of"]
 
-def test_kosmos_2_patch_224():
+def test_kosmos_2():
     # Create a client
     client = Client("[::]:50051")
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()
 
-    model_id = "microsoft/kosmos-2-patch14-224"
+    model_id = "microsoft/kosmos-2"
     
 
     model = client.Module(model_id)
@@ -32,6 +31,9 @@ def test_kosmos_2_patch_224():
     image = Image.open("new_image.jpg")
 
     response = model.image_to_text(prompt=prompt, image=image)
+    assert isinstance(response, dict)
+    assert response["processed_text"] is not None
+    assert response["entities"] is not None
 
     processed_text = response["processed_text"]
     entities = response["entities"]

@@ -1,1 +1,0 @@
-Image generation and Entity extraction using the microsoft/kosmos-2-patch14-224 model from Microsoft
