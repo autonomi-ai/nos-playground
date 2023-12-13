@@ -1,15 +1,13 @@
 images:
   dream-gaussian-gpu:
-    base: autonomi/nos:0.1.1-gpu
+    base: autonomi/nos:latest-gpu
     system:
       - libgl1
       - libgl1-mesa-glx
       - libegl1
       - libegl1-mesa-dev
+      - libglib2.0-0
     pip:
-      - diffusers==0.24.0
-      - transformers==4.35.2
-      - accelerate==0.23.0
       - tqdm
       - ninja
       - numpy
@@ -23,11 +21,11 @@ images:
       - xatlas
       - trimesh
       - PyMCubes
-      - pymeshlab
+      - pymeshlab==2022.2
     run:
-      - pip install git+https://github.com/ashawkey/diff-gaussian-rasterization.git
+      - TORCH_CUDA_ARCH_LIST="5.2 6.0 6.1 7.0 7.5 8.0 8.6+PTX" pip install git+https://github.com/ashawkey/diff-gaussian-rasterization.git
       - pip install git+https://github.com/NVlabs/nvdiffrast.git
-      
+
 models:
   dream-gaussian:
     model_cls: DreamGaussian
