@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -12,15 +13,15 @@ def import_repo(*args, **kwargs) -> str:
 
 class DreamGaussian:
 
-    repo_dir: str = import_repo("https://github.com/jiexiong2016/dreamgaussian.git")
     def __init__(self):
 
+        repo_path = Path(import_repo("https://github.com/jiexiong2016/dreamgaussian.git", force=True))
         from dream_gaussian import DreamGaussianModel
         
         assert torch.cuda.is_available(), "CUDA must be available to use DreamGaussian"
 
         self.device = torch.device("cuda")
-        self.model = DreamGaussianModel()
+        self.model = DreamGaussianModel(repo_path / Path("configs/dream_gsplat.yaml"))
         self.ref_size = 256
     
     def preprocess(self, img: np.ndarray):
