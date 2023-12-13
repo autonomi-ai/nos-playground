@@ -1,4 +1,4 @@
-Image generation and Entity extraction using the Kosmos-2 model from Microsoft
+Image generation and Entity extraction using the Kosmos 2 model from Microsoft
 
 The Huggingface page can be found here: https://huggingface.co/microsoft/kosmos-2-patch14-224.
 

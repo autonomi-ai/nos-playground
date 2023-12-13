@@ -13,7 +13,7 @@ def test_kosmos_2():
     assert client.WaitForServer()
     assert client.IsHealthy()
 
-    model_id = "microsoft/kosmos-2"
+    model_id = "microsoft/kosmos2"
     
 
     model = client.Module(model_id)

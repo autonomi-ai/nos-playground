@@ -1,5 +1,5 @@
 images:
-  kosmos-2-gpu:
+  kosmos2-gpu:
     base: autonomi/nos:0.1.0rc2-gpu
     pip:
       - torch==2.0.1
@@ -8,8 +8,8 @@ images:
       NOS_LOGGING_LEVEL: DEBUG
 
 models:
-  microsoft/kosmos-2:
+  microsoft/kosmos2:
     model_cls: Kosmos2
-    model_path: models/kosmos_2.py
+    model_path: models/kosmos2.py
     default_method: image_to_text
-    runtime_env: kosmos-2-gpu
+    runtime_env: kosmos2-gpu
