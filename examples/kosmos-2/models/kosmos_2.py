@@ -30,3 +30,4 @@ class Kosmos2:
         processed_text, entities = self.processor.post_process_generation(generated_text, cleanup_and_extract=cleanup_and_extract)
 
         return {"processed_text" : processed_text, "entities" : entities}
+    
