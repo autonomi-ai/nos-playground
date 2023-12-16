@@ -1,8 +1,11 @@
 from typing import List
-from PIL import Image
+
 from nos.client import Client
+from PIL import Image
+
 
 TEST_PROMPTS = ["a rabbit sitting on the grass."]
+
 
 def test_mvdream():
 

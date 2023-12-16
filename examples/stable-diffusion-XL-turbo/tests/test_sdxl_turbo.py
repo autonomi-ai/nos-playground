@@ -1,7 +1,8 @@
 from typing import List
 
-from PIL import Image
 from nos.client import Client
+from PIL import Image
+
 
 def test_sdxl_turbo():
 

@@ -1,5 +1,7 @@
 from typing import List
+
 from nos.client import Client
+
 
 def test_bark():
     client = Client("[::]:50051")

@@ -1,6 +1,8 @@
 from typing import List
+
 import cv2
 from nos.client import Client
+
 
 def test_dream_gaussian():
     client = Client("[::]:50051")
@@ -20,7 +22,7 @@ def test_dream_gaussian():
     test_img = cv2.imread("../csm_luigi_rgba.png", cv2.IMREAD_UNCHANGED)
     response = model(img=test_img)
     assert isinstance(response, dict)
-    assert response['f'] is None
-    assert response['v'] is None
-    assert response['vt'] is None
-    assert response['albedo'] is None
+    assert response["f"] is None
+    assert response["v"] is None
+    assert response["vt"] is None
+    assert response["albedo"] is None

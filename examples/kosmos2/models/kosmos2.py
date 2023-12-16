@@ -1,13 +1,15 @@
+from typing import Any, Dict
+
 import torch
-from transformers import AutoProcessor, AutoModelForVision2Seq
 from PIL import Image
-from typing import Dict, Any
+from transformers import AutoModelForVision2Seq, AutoProcessor
+
 
 class Kosmos2:
     def __init__(self, model_name: str = "microsoft/kosmos-2-patch14-224") -> None:
-        self.device_str = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.device_str = "cuda" if torch.cuda.is_available() else "cpu"
         self.device = torch.device(self.device_str)
-        
+
         self.model = AutoModelForVision2Seq.from_pretrained(model_name).to(self.device)
         self.processor = AutoProcessor.from_pretrained(model_name)
 
@@ -27,7 +29,8 @@ class Kosmos2:
         generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
         # By default, the generated  text is cleanup and the entities are extracted.
-        processed_text, entities = self.processor.post_process_generation(generated_text, cleanup_and_extract=cleanup_and_extract)
+        processed_text, entities = self.processor.post_process_generation(
+            generated_text, cleanup_and_extract=cleanup_and_extract
+        )
 
-        return {"processed_text" : processed_text, "entities" : entities}
-    
+        return {"processed_text": processed_text, "entities": entities}

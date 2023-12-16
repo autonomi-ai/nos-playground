@@ -1,21 +1,21 @@
 from typing import List, Union
 
-from PIL import Image
 import torch
-from diffusers import MotionAdapter, AnimateDiffPipeline, DDIMScheduler
+from diffusers import AnimateDiffPipeline, DDIMScheduler, MotionAdapter
+from PIL import Image
 
-class AnimateDiff():
 
+class AnimateDiff:
     def __init__(self, model_name: str = "Lykon/dreamshaper-7"):
         # Assert that CUDA is available for GPU acceleration
         assert torch.cuda.is_available()
 
         # Initialize the motion adapter from a pretrained model
         adapter = MotionAdapter.from_pretrained("guoyww/animatediff-motion-adapter-v1-5-2", use_safetensors=True)
-        
+
         # Initialize the pipeline from a pretrained model and attach the motion adapter
         self.pipe = AnimateDiffPipeline.from_pretrained(model_name, motion_adapter=adapter, use_safetensors=True)
-        
+
         # Initialize the scheduler from a pretrained model with specified parameters
         scheduler = DDIMScheduler.from_pretrained(
             model_name,
@@ -23,10 +23,10 @@ class AnimateDiff():
             beta_schedule="linear",
             clip_sample=False,
             timestep_spacing="linspace",
-            steps_offset=1
+            steps_offset=1,
         )
         self.pipe.scheduler = scheduler
-        
+
         # Move the pipeline to the GPU and set the data type to float16 for efficiency
         self.pipe.to(torch_device="cuda", torch_dtype=torch.float16)
 
@@ -55,7 +55,7 @@ class AnimateDiff():
 
         # Initialize a random number generator on the GPU
         g = torch.Generator(device="cuda")
-        
+
         # Set the seed for the random number generator if specified
         if seed != -1:
             g.manual_seed(seed)

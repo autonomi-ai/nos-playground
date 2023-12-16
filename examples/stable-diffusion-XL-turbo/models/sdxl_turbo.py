@@ -1,11 +1,11 @@
 from typing import List, Union
 
-from PIL import Image
 import torch
 from diffusers import AutoPipelineForText2Image
+from PIL import Image
+
 
 class StableDiffusionXLTurboModel:
-
     def __init__(self, model_name: str = "stabilityai/sdxl-turbo", dtype: str = "float16"):
 
         # Only support gpu for video generation
@@ -43,7 +43,7 @@ class StableDiffusionXLTurboModel:
             g.manual_seed(seed)
         else:
             g.seed()
-        
+
         # The guidance_scale is set to 0.0 since the turbo model was trained without it.
         return self.pipe(
             prompts * num_images,
