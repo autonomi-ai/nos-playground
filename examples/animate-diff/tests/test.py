@@ -1,6 +1,8 @@
-from typing import List, Iterable
-from PIL import Image
+from typing import Iterable, List
+
 from nos.client import Client
+from PIL import Image
+
 
 def test_animate_diff():
     client = Client("[::]:50051")

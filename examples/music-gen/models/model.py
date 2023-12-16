@@ -1,14 +1,15 @@
 from dataclasses import dataclass
 
 import torch
+from nos.hub import HuggingFaceHubConfig
 from transformers import pipeline
 
-from nos.hub import HuggingFaceHubConfig
 
 @dataclass(frozen=True)
 class MusicGenConfig(HuggingFaceHubConfig):
     torch_dtype: str = "float16"
     """Torch dtype string to use for inference."""
+
 
 class MusicGen:
     configs = {
@@ -40,6 +41,6 @@ class MusicGen:
 
         self.pipe = pipeline("text-to-audio", self.cfg.model_name, device=self.device_str)
         self.pipe.model.to(self.device)
-    
+
     def __call__(self, prompt: str):
-        return self.pipe(prompt, forward_params={"do_sample": True})    
+        return self.pipe(prompt, forward_params={"do_sample": True})

@@ -1,4 +1,4 @@
-# NOS Playground 🛝 
+# NOS Playground 🛝
 This is a playground for various examples using [NOS](https://github.com/autonomi-ai/nos).
 
 <img src="assets/exp_txt2img.png" width="256">
@@ -21,7 +21,7 @@ client = Client("[::]:50051")
 
 model_id = "YOUR-MODEL-ID"
 models: List[str] = client.ListModels()
-assert model_id in models 
+assert model_id in models
 # Check if the selected model has been served.
 
 inputs = YOUR-MODEL-INPUT
@@ -43,7 +43,7 @@ model_id: str = "m-bain/whisperx-large-v2"
 
 ### Text to Image
 ```python
-model_id: List[str] = ["sd-xl-turbo", 
+model_id: List[str] = ["sd-xl-turbo",
                         "playground-v2",
                         "latent-consistency-model"]
 ```

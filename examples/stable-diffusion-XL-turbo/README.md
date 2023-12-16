@@ -1,5 +1,5 @@
 # Stable Diffusion XL Turbo
-A nos integration example of [Stable Diffusion XL Turbo(SD-XL Turbo)](https://github.com/Stability-AI/generative-models). 
+A nos integration example of [Stable Diffusion XL Turbo(SD-XL Turbo)](https://github.com/Stability-AI/generative-models).
 The SD-XL Turbo is a diffusion model trained for real-time generation purpose, it is distilled from original SDXL 1.0 model.
 The orignal paper can be found [here](https://stability.ai/research/adversarial-diffusion-distillation).
 
