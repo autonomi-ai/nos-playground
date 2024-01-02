@@ -1,0 +1,36 @@
+images:
+  llm-gpu:
+    base: autonomi/nos:latest-gpu
+    pip:
+      - autoawq
+      - accelerate>=0.23.0
+      - bitsandbytes
+      - sentencepiece>=0.1.99
+      - ninja==1.11.1
+      - git+https://github.com/huggingface/transformers.git
+    env:
+      NOS_LOGGING_LEVEL: DEBUG
+      NOS_MAX_CONCURRENT_MODELS: 2
+
+models:
+  meta-llama/Llama-2-7b-chat-hf:
+    model_cls: StreamingChat
+    model_path: models/chat.py
+    default_method: chat
+    runtime_env: llm-gpu
+    deployment:
+      resources:
+        device: auto
+        device_memory: 15Gi
+
+  TinyLlama/TinyLlama-1.1B-Chat-v1.0:
+    model_cls: StreamingChat
+    model_path: models/chat.py
+    init_kwargs:
+      model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+    default_method: chat
+    runtime_env: llm-gpu
+    deployment:
+      resources:
+        device: auto
+        device_memory: 2.5Gi
