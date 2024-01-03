@@ -1,6 +1,6 @@
 images:
   bark-gpu:
-    base: autonomi/nos:0.1.1-gpu
+    base: autonomi/nos:latest-gpu
     pip:
       - diffusers==0.24.0
       - transformers==4.35.2

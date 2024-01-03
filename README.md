@@ -47,31 +47,31 @@ model_id: List[str] = ["sd-xl-turbo",
                         "playground-v2",
                         "latent-consistency-model"]
 ```
-<img src="examples/stable-diffusion-XL-turbo/example.png" width="150">
+<img src="examples/sdxl-turbo/assets/example.png" width="150">
 
 ### Text to Video
 ```python
 model_id: str = "animate-diff"
 ```
-<img src="examples/animate-diff/example.gif" width="150">
+<img src="examples/animate-diff/assets/example.gif" width="150">
 
 ### Image to Video
 ```python
 model_id: str = "stable-video-diffusion"
 ```
-<img src="assets/exp_img2vid_in.png" width="150"><img src="assets/exp_img2vid_out.gif" width="150">
+<img src="examples/stable-video-diffusion/assets/exp_img2vid_in.png" width="150"><img src="examples/stable-video-diffusion/assets/exp_img2vid_out.gif" width="150">
 
 ### Text to 360-View Images
 ```python
 model_id: str = "mv-dream"
 ```
-<img src="examples/mvdream/example.png" width="600">
+<img src="examples/mvdream/assets/example.png" width="600">
 
 ### Image to Mesh Model
 ```python
 model_id: str = "dream-gaussian"
 ```
-<img src="examples/dream-gaussian/csm_luigi_rgba.png" width="150"><img src="examples/dream-gaussian/example.gif" width="160">
+<img src="examples/dream-gaussian/assets/csm_luigi_rgba.png" width="150"><img src="examples/dream-gaussian/assets/example.gif" width="160">
 
 ### Text to Speech
 ```python

@@ -1,6 +1,6 @@
 images:
   mvdream-gpu:
-    base: autonomi/nos:0.1.0-gpu
+    base: autonomi/nos:latest-gpu
     pip:
       - transformers==4.27.1
       - xformers>=0.0.22
