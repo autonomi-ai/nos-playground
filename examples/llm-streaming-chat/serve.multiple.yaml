@@ -13,6 +13,16 @@ images:
       NOS_MAX_CONCURRENT_MODELS: 2
 
 models:
+  meta-llama/Llama-2-7b-chat-hf:
+    model_cls: StreamingChat
+    model_path: models/chat.py
+    default_method: chat
+    runtime_env: llm-gpu
+    deployment:
+      resources:
+        device: auto
+        device_memory: 15Gi
+
   TinyLlama/TinyLlama-1.1B-Chat-v1.0:
     model_cls: StreamingChat
     model_path: models/chat.py
