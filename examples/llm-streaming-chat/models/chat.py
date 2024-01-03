@@ -1,7 +1,7 @@
 import time
 from dataclasses import dataclass
 from threading import Thread
-from typing import List, Dict, Any, Iterable
+from typing import Any, Dict, Iterable, List
 
 import torch
 from nos.hub import HuggingFaceHubConfig, hf_login
@@ -29,7 +29,6 @@ class StreamingChatConfig(HuggingFaceHubConfig):
 
     chat_template: str = None
     """Chat template to use for the model."""
-
 
 
 class StreamingChat:

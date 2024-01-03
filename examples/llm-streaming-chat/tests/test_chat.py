@@ -1,6 +1,6 @@
-import pytest
 import sys
 
+import pytest
 from nos.client import Client
 from rich import print
 
@@ -18,6 +18,7 @@ MODELS = [
     "meta-llama/Llama-2-7b-chat-hf",
     "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
 ]
+
 
 @pytest.mark.parametrize("model_id", MODELS)
 def test_streaming_chat(client, model_id):
