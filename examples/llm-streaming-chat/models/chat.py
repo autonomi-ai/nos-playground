@@ -42,10 +42,9 @@ class StreamingChat:
             model_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
             compute_dtype="bfloat16",
         ),
-        "casperhansen/mixtral-instruct-awq": StreamingChatConfig(
-            model_name="casperhansen/mixtral-instruct-awq",
-            compute_dtype="float16",
-            additional_kwargs={"attn_implementation": "flash_attention_2", "low_cpu_mem_usage": True},
+        "TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ": StreamingChatConfig(
+            model_name="TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ",
+            additional_kwargs={"low_cpu_mem_usage": True},
         ),
     }
 
