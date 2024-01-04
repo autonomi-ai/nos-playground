@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-
 import torch
-from nos.hub import HuggingFaceHubConfig, hf_login
+from nos.hub import HuggingFaceHubConfig
 from sentence_transformers import SentenceTransformer, util
 
 
@@ -38,8 +37,6 @@ class GTEEmbedding:
     }
 
     def __init__(self, model_name: str = "TaylorAI/gte-tiny"):
-        from nos.logging import logger
-
         try:
             self.cfg = GTEEmbedding.configs[model_name]
         except KeyError:
@@ -51,25 +48,18 @@ class GTEEmbedding:
             self.device_str = "cpu"
         self.device = torch.device(self.device_str)
         self.model = SentenceTransformer(self.cfg.model_name, device = self.device)
-        self.logger = logger
 
 
     def embed(self, text, convert_to_tensor = False):
         output = self.model.encode(text, convert_to_tensor=convert_to_tensor)
-
-
         return {'output': output}
         
 
 
     def sentence_similarity(self, sentences):
-        print(sentences)
         embedding_1= self.embed(sentences[0], convert_to_tensor=True)["output"]
-        print(embedding_1)
         embedding_2 = self.embed(sentences[1], convert_to_tensor=True)["output"]
-        print(embedding_2)
         cos_sim = util.pytorch_cos_sim(embedding_1, embedding_2)
-        print(cos_sim)
-        print(type(cos_sim))
 
         return {"output" : cos_sim}
+    
