@@ -1,10 +1,11 @@
-from nos.client import Client
-
-from rich import print
-from PIL import Image
 import requests
+from nos.client import Client
+from PIL import Image
+from rich import print
+
 
 TEST_PROMPTS = ["<grounding>An image of"]
+
 
 def test_kosmos_2():
     # Create a client
@@ -14,7 +15,6 @@ def test_kosmos_2():
     assert client.IsHealthy()
 
     model_id = "microsoft/kosmos2"
-    
 
     model = client.Module(model_id)
     assert model is not None
@@ -39,4 +39,3 @@ def test_kosmos_2():
     entities = response["entities"]
     print(f"Processed Text: {processed_text}")
     print(f"Entities: {entities}")
-

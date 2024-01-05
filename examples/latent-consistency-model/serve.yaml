@@ -1,6 +1,6 @@
 images:
   lcm-gpu:
-    base: autonomi/nos:0.1.0rc3-gpu-py310-cu118
+    base: autonomi/nos:latest-gpu-py310-cu118
     system:
       - libgl1
       - libgl1-mesa-glx

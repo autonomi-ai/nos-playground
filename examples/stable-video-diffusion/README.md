@@ -1,5 +1,5 @@
 # Stable Video Diffusion
-A nos integration example of [Stable Video Diffusion(SVD)](https://github.com/Stability-AI/generative-models). The SVD is a diffusion model trained for short video generation task, it uses a still image for conditioning to creates a short video clip. 
+A nos integration example of [Stable Video Diffusion(SVD)](https://github.com/Stability-AI/generative-models). The SVD is a diffusion model trained for short video generation task, it uses a still image for conditioning to creates a short video clip.
 The orignal paper can be found [here](https://stability.ai/research/stable-video-diffusion-scaling-latent-video-diffusion-models-to-large-datasets).
 
 ## Deployment

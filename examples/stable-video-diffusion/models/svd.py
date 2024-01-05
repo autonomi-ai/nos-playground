@@ -1,15 +1,15 @@
 from dataclasses import dataclass
-from typing import Union, Iterable
+from typing import Iterable, Union
 
-from PIL import Image
 import numpy as np
 import torch
-
 from nos.hub import HuggingFaceHubConfig
+from PIL import Image
+
 
 @dataclass(frozen=True)
 class StableVideoDiffusionConfig(HuggingFaceHubConfig):
-    
+
     model_cls: str = "StableVideoDiffusionPipeline"
     """Name of the model class to use."""
 
@@ -22,25 +22,24 @@ class StableVideoDiffusionConfig(HuggingFaceHubConfig):
     height: int = 576
     """Image height to use for inference, optimally set to be the same as training."""
 
-    video_frames : int = 14
+    video_frames: int = 14
     """Number of frames the model is capable to generate."""
 
-    decode_chunk_size : int = 8
+    decode_chunk_size: int = 8
     """Number of frames will be decoded at once."""
 
-class StableVideoDiffusionModel():
+
+class StableVideoDiffusionModel:
 
     configs = {
         "stable-video-diffusion-img2vid": StableVideoDiffusionConfig(
-            model_name="stabilityai/stable-video-diffusion-img2vid",
-            video_frames=14
+            model_name="stabilityai/stable-video-diffusion-img2vid", video_frames=14
         ),
         "stable-video-diffusion-img2vid-xt": StableVideoDiffusionConfig(
-            model_name="stabilityai/stable-video-diffusion-img2vid-xt",
-            video_frames=25
+            model_name="stabilityai/stable-video-diffusion-img2vid-xt", video_frames=25
         ),
     }
-    
+
     def __init__(self, model_name: str = "stable-video-diffusion-img2vid-xt"):
 
         # Only support gpu for video generation
@@ -51,17 +50,15 @@ class StableVideoDiffusionModel():
         try:
             self.cfg = StableVideoDiffusionModel.configs[model_name]
         except KeyError:
-            raise ValueError(f"Invalid model_name: {model_name}, available models: {StableVideoDiffusionConfig.configs.keys()}")
-        
+            raise ValueError(
+                f"Invalid model_name: {model_name}, available models: {StableVideoDiffusionConfig.configs.keys()}"
+            )
+
         self.torch_dtype = getattr(torch, self.cfg.torch_dtype)
         self.variant = "fp16" if self.torch_dtype == torch.float16 else None
 
         model_cls = getattr(diffusers, self.cfg.model_cls)
-        self.pipe = model_cls.from_pretrained(
-            self.cfg.model_name,
-            torch_dtype=self.torch_dtype,
-            variant=self.variant
-        )
+        self.pipe = model_cls.from_pretrained(self.cfg.model_name, torch_dtype=self.torch_dtype, variant=self.variant)
 
         self.pipe.enable_model_cpu_offload()
 
@@ -70,7 +67,7 @@ class StableVideoDiffusionModel():
         image: Union[np.ndarray, Image.Image],
         seed: int = -1,
     ) -> Iterable[Image.Image]:
-        
+
         if isinstance(image, np.ndarray):
             image = Image.fromarray(image)
         image = image.resize((self.cfg.width, self.cfg.height))

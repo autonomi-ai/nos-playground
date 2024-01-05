@@ -1,11 +1,12 @@
-import requests
-from typing import List, Iterable
+from typing import Iterable, List
 
+import requests
+from nos.client import Client
 from PIL import Image
 
-from nos.client import Client
 
 TEST_IMAGE_LINK = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/svd/rocket.png?download=true"
+
 
 def test_svd():
     client = Client("[::]:50051")
