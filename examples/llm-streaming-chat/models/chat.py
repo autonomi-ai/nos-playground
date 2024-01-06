@@ -42,6 +42,10 @@ class StreamingChat:
             model_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
             compute_dtype="bfloat16",
         ),
+        "TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ": StreamingChatConfig(
+            model_name="TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ",
+            additional_kwargs={"low_cpu_mem_usage": True},
+        ),
         "TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ": StreamingChatConfig(
             model_name="TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ",
             additional_kwargs={"low_cpu_mem_usage": True},
