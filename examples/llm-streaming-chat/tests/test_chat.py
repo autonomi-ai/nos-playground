@@ -15,8 +15,9 @@ def client():
 
 SYSTEM_PROMPT = "You are NOS chat, a Llama 2 large language model (LLM) agent hosted by Autonomi AI."
 MODELS = [
-    "meta-llama/Llama-2-7b-chat-hf",
-    "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    # "meta-llama/Llama-2-7b-chat-hf",
+    # "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ",
 ]
 
 

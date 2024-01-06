@@ -1,26 +1,19 @@
 images:
-  llm-gpu:
-    base: autonomi/nos:latest-gpu
+  llm-py310-cu121:
+    base: autonomi/nos:latest-py310-cu121
     pip:
-      - autoawq
-      - accelerate>=0.23.0
+      - git+https://github.com/casper-hansen/AutoAWQ
       - bitsandbytes
-      - sentencepiece>=0.1.99
-      - ninja==1.11.1
-      - git+https://github.com/huggingface/transformers.git
-    env:
-      NOS_LOGGING_LEVEL: DEBUG
-      NOS_MAX_CONCURRENT_MODELS: 2
 
 models:
-  TinyLlama/TinyLlama-1.1B-Chat-v1.0:
+  TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ:
     model_cls: StreamingChat
     model_path: models/chat.py
     init_kwargs:
-      model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      model_name: TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ
     default_method: chat
     runtime_env: llm-gpu
     deployment:
       resources:
         device: auto
-        device_memory: 2.5Gi
+        device_memory: 3Gi
