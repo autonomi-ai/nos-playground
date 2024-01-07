@@ -1,0 +1,21 @@
+images:
+  llm-py310-cu121:
+    base: autonomi/nos:latest-py310-cu121
+    pip:
+      - bitsandbytes
+      - einops
+      - sentencepiece
+      - transformers>=4.35.0
+
+models:
+  Trelis/Llama-2-7b-chat-hf-function-calling:
+    model_cls: LLMFunctionCalling
+    model_path: models/model.py
+    init_kwargs:
+      model_name: Trelis/Llama-2-7b-chat-hf-function-calling
+    default_method: chat
+    runtime_env: llm-gpu
+    deployment:
+      resources:
+        device: auto
+        device_memory: 15Gi
