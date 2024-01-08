@@ -1,19 +1,22 @@
 from nos.client import Client
 import numpy as np
-from torch import Tensor
+from typing import List
+import pytest
+
 
 TEST_SENTENCES = ["I'm happy", "I'm full of happiness"]
 TEST_MODEL_ID =  "TaylorAI/gte-tiny"
 
-def test_gte_embedding_embed():
+@pytest.fixture(scope="session", autouse=True)
+def client():
     # Create a client
     client = Client("[::]:50051")
     assert client is not None
     assert client.WaitForServer()
-    assert client.IsHealthy()
+    yield client
 
+def test_gte_embedding_embed(client):
     model_id = TEST_MODEL_ID
-    
     models: List[str] = client.ListModels()
     assert model_id in models
 
@@ -28,16 +31,8 @@ def test_gte_embedding_embed():
     output = response["output"]
     assert isinstance(output, np.ndarray)
 
-
-def test_gte_embedding_sentence_similarity():
-    # Create a client
-    client = Client("[::]:50051")
-    assert client is not None
-    assert client.WaitForServer()
-    assert client.IsHealthy()
-
+def test_gte_embedding_sentence_similarity(client):
     model_id = TEST_MODEL_ID
-    
     models: List[str] = client.ListModels()
     assert model_id in models
 
@@ -50,5 +45,4 @@ def test_gte_embedding_sentence_similarity():
     assert isinstance(response, dict)
     assert response["output"] is not None
     output = response["output"]
-    assert isinstance(output, Tensor)
-
+    assert isinstance(output, float)

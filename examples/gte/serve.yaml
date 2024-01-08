@@ -2,11 +2,8 @@ images:
   gte-embedding-gpu:
     base: autonomi/nos:latest-gpu
     pip:
-      - torch==2.0.1
       - transformers==4.36.0
       - sentence-transformers==2.2.2
-    env:
-      NOS_LOGGING_LEVEL: DEBUG
 
 models:
   TaylorAI/gte-tiny:

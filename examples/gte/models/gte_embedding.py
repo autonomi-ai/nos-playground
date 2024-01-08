@@ -2,8 +2,8 @@ from dataclasses import dataclass
 import torch
 from nos.hub import HuggingFaceHubConfig
 from sentence_transformers import SentenceTransformer, util
-
-
+import numpy as np
+from typing import Dict, List, Union
 
 @dataclass(frozen=True)
 class GTEEmbeddingConfig(HuggingFaceHubConfig):
@@ -49,17 +49,13 @@ class GTEEmbedding:
         self.device = torch.device(self.device_str)
         self.model = SentenceTransformer(self.cfg.model_name, device = self.device)
 
-
-    def embed(self, text, convert_to_tensor = False):
-        output = self.model.encode(text, convert_to_tensor=convert_to_tensor)
+    def embed(self, text: Union[str, List[str]]) -> Dict[str, np.ndarray]:
+        output = self.model.encode(text)
         return {'output': output}
-        
 
-
-    def sentence_similarity(self, sentences):
-        embedding_1= self.embed(sentences[0], convert_to_tensor=True)["output"]
-        embedding_2 = self.embed(sentences[1], convert_to_tensor=True)["output"]
-        cos_sim = util.pytorch_cos_sim(embedding_1, embedding_2)
-
+    def sentence_similarity(self, sentences) -> Dict[str, float]:
+        embedding_1= self.embed(sentences[0]) ["output"]
+        embedding_2 = self.embed(sentences[1])["output"]
+        cos_sim = util.pytorch_cos_sim(embedding_1, embedding_2).item()
         return {"output" : cos_sim}
     
