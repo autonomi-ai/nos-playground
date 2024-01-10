@@ -53,7 +53,7 @@ class GTEEmbedding:
         output = self.model.encode(text)
         return {'output': output}
 
-    def sentence_similarity(self, sentences) -> Dict[str, float]:
+    def sentence_similarity(self, sentences: List[str]) -> Dict[str, float]:
         embedding_1= self.embed(sentences[0]) ["output"]
         embedding_2 = self.embed(sentences[1])["output"]
         cos_sim = util.pytorch_cos_sim(embedding_1, embedding_2).item()
