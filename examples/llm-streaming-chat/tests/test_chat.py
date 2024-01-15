@@ -21,9 +21,7 @@ MODELS = [
 ]
 
 
-@pytest.mark.parametrize("model_id", MODELS)
-def test_streaming_chat(client, model_id):
-
+def _test_streaming_chat_model(client, model_id):
     # Load the llama chat model
     model = client.Module(model_id)
 
@@ -42,3 +40,18 @@ def test_streaming_chat(client, model_id):
         sys.stdout.write(response)
         sys.stdout.flush()
     print()
+
+
+@pytest.mark.parametrize("model_id", MODELS)
+def test_streaming_chat(client, model_id):
+    _test_streaming_chat_model(client, model_id)
+
+
+def test_streaming_chat_phixtral(client):
+    model_id = "mlabonne/phixtral-4x2_8"
+    _test_streaming_chat_model(client, model_id)
+
+
+def test_streaming_chat_tinyllama(client):
+    model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    _test_streaming_chat_model(client, model_id)

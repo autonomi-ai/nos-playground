@@ -33,26 +33,19 @@ class StreamingChatConfig(HuggingFaceHubConfig):
 
 class StreamingChat:
     configs = {
-        "meta-llama/Llama-2-7b-chat-hf": StreamingChatConfig(
-            model_name="meta-llama/Llama-2-7b-chat-hf",
+        "mlabonne/phixtral-2x2_8": StreamingChatConfig(
+            model_name="mlabonne/phixtral-2x2_8",
             compute_dtype="float16",
-            needs_auth=True,
+            additional_kwargs={"load_in_4bit": True, "trust_remote_code": True, "torch_dtype": "auto"},
         ),
-        "TinyLlama/TinyLlama-1.1B-Chat-v1.0": StreamingChatConfig(
-            model_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
-            compute_dtype="bfloat16",
-        ),
-        "TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ": StreamingChatConfig(
-            model_name="TheBloke/TinyLlama-1.1B-Chat-v1.0-AWQ",
-            additional_kwargs={"low_cpu_mem_usage": True},
-        ),
-        "TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ": StreamingChatConfig(
-            model_name="TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ",
-            additional_kwargs={"low_cpu_mem_usage": True},
+        "mlabonne/phixtral-4x2_8": StreamingChatConfig(
+            model_name="mlabonne/phixtral-4x2_8",
+            compute_dtype="float16",
+            additional_kwargs={"load_in_4bit": True, "trust_remote_code": True, "torch_dtype": "auto"},
         ),
     }
 
-    def __init__(self, model_name: str = "meta-llama/Llama-2-7b-chat-hf"):
+    def __init__(self, model_name: str = "mlabonne/phixtral-4x2_8"):
         from nos.logging import logger
 
         try:
@@ -65,16 +58,14 @@ class StreamingChat:
         self.device_str = "cuda" if torch.cuda.is_available() else "cpu"
         self.device = torch.device(self.device_str)
 
+        # Load the model and tokenizer
         token = hf_login() if self.cfg.needs_auth else None
         self.model = AutoModelForCausalLM.from_pretrained(
             self.cfg.model_name,
-            torch_dtype=getattr(torch, self.cfg.compute_dtype),
             token=token,
-            device_map="auto",
             **(self.cfg.additional_kwargs or {}),
         )
-        self.tokenizer = AutoTokenizer.from_pretrained(self.cfg.model_name, token=token)
-        self.tokenizer.use_default_system_prompt = False
+        self.tokenizer = AutoTokenizer.from_pretrained(self.cfg.model_name, token=token, trust_remote_code=True)
         self.logger = logger
 
     @torch.inference_mode()

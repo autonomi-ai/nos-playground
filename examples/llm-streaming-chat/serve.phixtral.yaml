@@ -1,0 +1,21 @@
+images:
+  llm-py310-cu121:
+    base: autonomi/nos:latest-py310-cu121
+    pip:
+      - bitsandbytes
+      - transformers
+      - einops
+      - accelerate
+
+models:
+  mlabonne/phixtral-4x2_8:
+    model_cls: StreamingChat
+    model_path: models/phixtral_chat.py
+    init_kwargs:
+      model_name: mlabonne/phixtral-4x2_8
+    default_method: chat
+    runtime_env: llm-gpu
+    deployment:
+      resources:
+        device: auto
+        device_memory: 7Gi
