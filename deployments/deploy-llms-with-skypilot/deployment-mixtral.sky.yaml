@@ -1,4 +1,4 @@
-# Usage: sky launch -c dev--llm-server--gcp skypilot.serve.yaml
+# Usage: sky serve up -n nos-service-mixtral service-mixtral.sky.yaml
 
 file_mounts:
   /app: ./app
@@ -8,11 +8,10 @@ resources:
   accelerators: L4:1
   ports:
     - 8000
-    - 50051
 
 setup: |
   sudo apt-get install -y docker-compose-plugin
   pip install torch-nos
 
 run: |
-  cd /app && nos serve up -c serve.yaml
+  cd /app && nos serve up -c serve.mixtral.yaml --http --logging-level DEBUG

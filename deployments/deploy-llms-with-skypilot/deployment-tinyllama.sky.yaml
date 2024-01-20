@@ -1,0 +1,17 @@
+# Usage: sky launch -c nos-server-tinyllama deployment-tinyllama.sky.yaml
+
+file_mounts:
+  /app: ./app
+
+resources:
+  cloud: gcp
+  accelerators: T4:1
+  ports:
+    - 8000
+
+setup: |
+  sudo apt-get install -y docker-compose-plugin
+  pip install torch-nos
+
+run: |
+  cd /app && nos serve up -c serve.tinyllama.yaml --http

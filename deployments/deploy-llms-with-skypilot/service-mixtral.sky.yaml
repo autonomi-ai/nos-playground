@@ -1,0 +1,23 @@
+# Usage: sky serve up -n nos-service-mixtral service-mixtral.sky.yaml
+
+file_mounts:
+  /app: ./app
+
+resources:
+  cloud: gcp
+  accelerators: L4:1
+  use_spot: True
+  ports:
+    - 8000
+
+service:
+  readiness_probe:
+    path: /v1/health
+  replicas: 2
+
+setup: |
+  sudo apt-get install -y docker-compose-plugin
+  pip install torch-nos
+
+run: |
+  cd /app && nos serve up -c serve.mixtral.yaml --http --logging-level DEBUG

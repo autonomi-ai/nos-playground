@@ -33,4 +33,4 @@ models:
     deployment:
       resources:
         device: auto
-        device_memory: 2.5Gi
+        device_memory: 3Gi
