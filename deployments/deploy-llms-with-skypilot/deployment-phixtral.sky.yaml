@@ -1,0 +1,17 @@
+# Usage: sky serve up -n nos-service-phixtral service-phixtral.sky.yaml
+
+file_mounts:
+  /app: ./app
+
+resources:
+  cloud: gcp
+  accelerators: L4:1
+  ports:
+    - 8000
+
+setup: |
+  sudo apt-get install -y docker-compose-plugin
+  pip install torch-nos
+
+run: |
+  cd /app && nos serve up -c serve.phixtral.yaml --http
