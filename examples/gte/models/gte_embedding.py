@@ -11,9 +11,6 @@ from sentence_transformers import SentenceTransformer, util
 class GTEEmbeddingConfig(HuggingFaceHubConfig):
     """Sentence Embedding model configuration."""
 
-    max_input_token_length: int = 512
-    """Maximum number of tokens in the input."""
-
     compute_dtype: str = "float16"
     """Compute type for the model."""
 
