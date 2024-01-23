@@ -1,9 +1,11 @@
 from dataclasses import dataclass
+from typing import Dict, List, Union
+
+import numpy as np
 import torch
 from nos.hub import HuggingFaceHubConfig
 from sentence_transformers import SentenceTransformer, util
-import numpy as np
-from typing import Dict, List, Union
+
 
 @dataclass(frozen=True)
 class GTEEmbeddingConfig(HuggingFaceHubConfig):
@@ -40,22 +42,23 @@ class GTEEmbedding:
         try:
             self.cfg = GTEEmbedding.configs[model_name]
         except KeyError:
-            raise ValueError(f"Invalid model_name: {model_name}, available models: {GTEEmbeddingConfig.configs.keys()}")
+            raise ValueError(
+                f"Invalid model_name: {model_name}, available models: {GTEEmbeddingConfig.configs.keys()}"
+            )
 
         if torch.cuda.is_available():
             self.device_str = "cuda"
         else:
             self.device_str = "cpu"
         self.device = torch.device(self.device_str)
-        self.model = SentenceTransformer(self.cfg.model_name, device = self.device)
+        self.model = SentenceTransformer(self.cfg.model_name, device=self.device)
 
     def embed(self, text: Union[str, List[str]]) -> Dict[str, np.ndarray]:
         output = self.model.encode(text)
-        return {'output': output}
+        return {"output": output}
 
     def sentence_similarity(self, sentences: List[str]) -> Dict[str, float]:
-        embedding_1= self.embed(sentences[0]) ["output"]
+        embedding_1 = self.embed(sentences[0])["output"]
         embedding_2 = self.embed(sentences[1])["output"]
         cos_sim = util.pytorch_cos_sim(embedding_1, embedding_2).item()
-        return {"output" : cos_sim}
-    
+        return {"output": cos_sim}

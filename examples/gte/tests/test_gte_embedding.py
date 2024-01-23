@@ -1,11 +1,13 @@
-from nos.client import Client
-import numpy as np
 from typing import List
+
+import numpy as np
 import pytest
+from nos.client import Client
 
 
 TEST_SENTENCES = ["I'm happy", "I'm full of happiness"]
-TEST_MODEL_ID =  "TaylorAI/gte-tiny"
+TEST_MODEL_ID = "TaylorAI/gte-tiny"
+
 
 @pytest.fixture(scope="session", autouse=True)
 def client():
@@ -14,6 +16,7 @@ def client():
     assert client is not None
     assert client.WaitForServer()
     yield client
+
 
 def test_gte_embedding_embed(client):
     model_id = TEST_MODEL_ID
@@ -31,6 +34,7 @@ def test_gte_embedding_embed(client):
     output = response["output"]
     assert isinstance(output, np.ndarray)
 
+
 def test_gte_embedding_sentence_similarity(client):
     model_id = TEST_MODEL_ID
     models: List[str] = client.ListModels()
@@ -41,7 +45,7 @@ def test_gte_embedding_sentence_similarity(client):
     assert model.GetModelInfo() is not None
     print(f"Test [model={model_id}]")
 
-    response = model.sentence_similarity(sentences = TEST_SENTENCES)
+    response = model.sentence_similarity(sentences=TEST_SENTENCES)
     assert isinstance(response, dict)
     assert response["output"] is not None
     output = response["output"]
