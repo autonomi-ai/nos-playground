@@ -1,0 +1,25 @@
+images:
+  llm-gpu:
+    base: autonomi/nos:latest-gpu
+    pip:
+      - accelerate
+      - bitsandbytes
+      - datasets
+      - einops
+      - sentencepiece
+      - transformers>=4.35.0
+      - outlines
+      - tenacity
+
+models:
+  mistralai/Mistral-7B-v0.1-json:
+    model_cls: LLMJsonMode
+    model_path: models/outlines_model.py
+    init_kwargs:
+      model_name: mistralai/Mistral-7B-v0.1-json
+    default_method: generate
+    runtime_env: llm-gpu
+    deployment:
+      resources:
+        device: auto
+        device_memory: 15Gi
