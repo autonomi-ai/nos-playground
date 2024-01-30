@@ -1,0 +1,13 @@
+images:
+  gte-embedding-gpu:
+    base: autonomi/nos:latest-gpu
+    pip:
+      - transformers==4.36.0
+      - sentence-transformers==2.2.2
+
+models:
+  TaylorAI/gte-tiny:
+    model_cls: GTEEmbedding
+    model_path: models/gte_embedding.py
+    default_method: embed
+    runtime_env: gte-embedding-gpu
