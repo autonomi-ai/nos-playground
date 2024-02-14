@@ -19,7 +19,7 @@ def test_whisperx_transcribe_audio_file():
     from rich.pretty import pretty_repr
 
     # Create a client
-    client = Client("[::]:50051")
+    client = Client()
     assert client.WaitForServer()
 
     # Load the custom whisperx model

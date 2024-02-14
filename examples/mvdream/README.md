@@ -13,7 +13,7 @@ Here is an example how to run the inference:
 from PIL import Image
 from nos.client import Client
 
-client = Client("[::]:50051")
+client = Client()
 model = client.Module("mv-dream")
 response = model(prompts=["a rabbit sitting on the grass."])
 

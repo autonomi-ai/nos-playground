@@ -8,7 +8,7 @@ from rich import print
 @pytest.fixture(scope="session", autouse=True)
 def client():
     # Create a client
-    client = Client("[::]:50051")
+    client = Client()
     assert client.WaitForServer()
     yield client
 
