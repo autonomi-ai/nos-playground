@@ -5,7 +5,7 @@ from PIL import Image
 
 
 def test_playground_v2():
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()

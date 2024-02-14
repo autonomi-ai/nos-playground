@@ -9,7 +9,7 @@ TEST_PROMPTS = ["<grounding>An image of"]
 
 def test_kosmos_2():
     # Create a client
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()

@@ -16,7 +16,7 @@ import requests
 from PIL import Image
 from nos.client import Client
 
-client = Client("[::]:50051")
+client = Client()
 model = client.Module("stable-video-diffusion")
 
 image_link = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/svd/rocket.png?download=true"

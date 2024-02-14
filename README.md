@@ -17,7 +17,7 @@ You can then use the NOS Python client library to run the inference:
 from PIL import Image
 from nos.client import Client
 
-client = Client("[::]:50051")
+client = Client()
 
 model_id = "YOUR-MODEL-ID"
 models: List[str] = client.ListModels()

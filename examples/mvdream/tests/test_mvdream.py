@@ -9,7 +9,7 @@ TEST_PROMPTS = ["a rabbit sitting on the grass."]
 
 def test_mvdream():
 
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()

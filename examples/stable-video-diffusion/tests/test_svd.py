@@ -9,7 +9,7 @@ TEST_IMAGE_LINK = "https://huggingface.co/datasets/huggingface/documentation-ima
 
 
 def test_svd():
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()

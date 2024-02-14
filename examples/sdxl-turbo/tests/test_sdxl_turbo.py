@@ -6,7 +6,7 @@ from PIL import Image
 
 def test_sdxl_turbo():
 
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()

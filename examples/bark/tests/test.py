@@ -4,7 +4,7 @@ from nos.client import Client
 
 
 def test_bark():
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     assert client.IsHealthy()

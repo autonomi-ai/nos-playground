@@ -12,7 +12,7 @@ TEST_MODEL_ID = "TaylorAI/gte-tiny"
 @pytest.fixture(scope="session", autouse=True)
 def client():
     # Create a client
-    client = Client("[::]:50051")
+    client = Client()
     assert client is not None
     assert client.WaitForServer()
     yield client
