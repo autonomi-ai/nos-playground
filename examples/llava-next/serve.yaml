@@ -1,0 +1,33 @@
+images:
+  llava-next-gpu:
+    base: autonomi/nos:latest-py310-cu118
+    pip:
+      - "torch>=1.10"
+      - "transformers"
+      - "Pillow"
+      - "flask"
+      - "requests"
+    workdir: /app/llava-next
+
+env:
+  NOS_LOGGING_LEVEL: DEBUG
+run:
+  - pip install --upgrade pip
+  - pip install --no-deps git+https://github.com/LLaVA-VL/LLaVA-NeXT.git
+  # Install additional dependencies if necessary
+  - pip install Pillow
+  - pip install flask
+  - pip install requests
+
+models:
+  llava-next-image:
+    model_cls: LlavaNextImage
+    model_path: models/llava_next.py
+    default_method: generate
+    runtime_env: llava-next-gpu
+
+  llava-next-video:
+    model_cls: LlavaNextVideo
+    model_path: models/llava_next.py
+    default_method: generate
+    runtime_env: llava-next-gpu
